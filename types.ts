@@ -1,5 +1,5 @@
 
-export type LanguageCode = 'he' | 'en' | 'ru' | 'es' | 'de' | 'fr' | 'zh' | 'hi';
+export type LanguageCode = 'he' | 'en' | 'ru' | 'es' | 'de' | 'fr' | 'zh' | 'hi' | 'it';
 export type LayoutVariant = 'qwerty' | 'dvorak' | 'azerty';
 export type ThemeMode = 'dark' | 'light';
 export type FontSize = 'sm' | 'md' | 'lg';

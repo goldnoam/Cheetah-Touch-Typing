@@ -40,6 +40,16 @@ export const KEYBOARD_VARIANTS: Record<LanguageCode, Partial<Record<LayoutVarian
       ]
     }
   },
+  it: {
+    qwerty: {
+      language: 'Italiano',
+      rows: [
+        ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+        ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ò', 'à'],
+        ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-']
+      ]
+    }
+  },
   zh: {
     qwerty: {
       language: '中文 (Pinyin)',
@@ -172,6 +182,52 @@ export const INITIAL_EXERCISES: Exercise[] = [
     content: 'const typing = (speed) => { return speed > 100 ? "Cheetah" : "Turtle"; }; console.log(typing(120));'
   },
 
+  // RUSSIAN
+  {
+    id: 'ru-1',
+    title: 'Базовая строка',
+    language: 'ru',
+    level: 'beginner',
+    content: 'фыва олдж фыва олдж ах ох ил ил ах ох ах олдж фыва рот гора нора пара'
+  },
+  {
+    id: 'ru-2',
+    title: 'Простые слова',
+    language: 'ru',
+    level: 'intermediate',
+    content: 'Мама мыла раму долго и чисто. Кот сидел на окне и смотрел на птиц в небе.'
+  },
+  {
+    id: 'ru-3',
+    title: 'Сложные предложения',
+    language: 'ru',
+    level: 'advanced',
+    content: 'Съешь ещё этих мягких французских булок, да выпей же чаю. Программирование — это магия.'
+  },
+
+  // ITALIAN
+  {
+    id: 'it-1',
+    title: 'Fila Base',
+    language: 'it',
+    level: 'beginner',
+    content: 'asdf jklò asdf jklò sala ala las salada falsa faja gala halla casa asola'
+  },
+  {
+    id: 'it-2',
+    title: 'Frasi Semplici',
+    language: 'it',
+    level: 'intermediate',
+    content: 'Il sole splende alto nel cielo azzurro oggi. Mi piace molto imparare a digitare velocemente.'
+  },
+  {
+    id: 'it-3',
+    title: 'Testo Avanzato',
+    language: 'it',
+    level: 'advanced',
+    content: 'Nel mezzo del cammin di nostra vita mi ritrovai per una selva oscura, ché la diritta via era smarrita.'
+  },
+
   // FRENCH
   {
     id: 'fr-1',
@@ -258,6 +314,42 @@ export const UI_STRINGS = {
     fontSize: 'Font Size',
     history: 'History'
   },
+  ru: {
+    title: 'Чита Тайпинг',
+    tagline: 'Печатай быстро как гепард, точно как ястреб.',
+    startPractice: 'Начать практику',
+    selectLanguage: 'Выбрать язык',
+    wpm: 'WPM',
+    accuracy: 'Точность',
+    time: 'Время',
+    errors: 'Ошибки',
+    restart: 'Начать заново',
+    nextLevel: 'Следующий уровень',
+    finished: 'Готово!',
+    layout: 'Раскладка',
+    goal: 'Цель',
+    goalProgress: 'Прогресс',
+    fontSize: 'Размер шрифта',
+    history: 'История'
+  },
+  it: {
+    title: 'Cheetah Typing',
+    tagline: 'Digita veloce come un ghepardo, preciso come un falco.',
+    startPractice: 'Inizia Pratica',
+    selectLanguage: 'Seleziona Lingua',
+    wpm: 'WPM',
+    accuracy: 'Precisione',
+    time: 'Tempo',
+    errors: 'Errori',
+    restart: 'Ricomincia',
+    nextLevel: 'Prossimo Livello',
+    finished: 'Finito!',
+    layout: 'Layout',
+    goal: 'Obiettivo',
+    goalProgress: 'Progresso',
+    fontSize: 'Dimensione Font',
+    history: 'Cronologia'
+  },
   zh: {
     title: '猎豹打字',
     tagline: '打字如猎豹般迅速，准确如老鹰般。',
@@ -287,7 +379,7 @@ export const UI_STRINGS = {
     errors: 'गलतियां',
     restart: 'पुनः प्रारंभ करें',
     nextLevel: 'अगला स्तर',
-    finished: 'पूरा हुआ!',
+    finished: 'पूра हुआ!',
     layout: 'लेआउट',
     goal: 'लक्ष्य',
     goalProgress: 'प्रगति',

@@ -40,7 +40,16 @@ const App: React.FC = () => {
   const speak = useCallback((text: string) => {
     if (!isSoundEnabled) return;
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = selectedLang === 'he' ? 'he-IL' : 'en-US';
+    const langMap: Record<string, string> = {
+      he: 'he-IL',
+      en: 'en-US',
+      ru: 'ru-RU',
+      it: 'it-IT',
+      fr: 'fr-FR',
+      es: 'es-ES',
+      de: 'de-DE'
+    };
+    utterance.lang = langMap[selectedLang] || 'en-US';
     utterance.rate = 1.2;
     window.speechSynthesis.speak(utterance);
   }, [isSoundEnabled, selectedLang]);
@@ -315,7 +324,7 @@ const App: React.FC = () => {
             isPaused={isPaused}
           />
 
-          <StatsPanel stats={stats} lang={selectedLang} theme={theme} wpmGoal={wpmGoal} />
+          <StatsPanel stats={stats} lang={selectedLang === 'he' ? 'he' : 'en'} theme={theme} wpmGoal={wpmGoal} />
 
           {/* Interactive Mobile WASD/Arrows HUD */}
           <div className="md:hidden flex flex-col items-center gap-2 mb-4 select-none">
