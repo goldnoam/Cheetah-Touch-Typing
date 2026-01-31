@@ -24,7 +24,27 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Link the production CSS -->
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              assistant: ['Assistant', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            colors: {
+              amber: {
+                500: '#f59e0b',
+                600: '#d97706',
+              },
+            },
+          },
+        },
+      }
+    </script>
+    
     <link rel="stylesheet" href="index.css">
     
     <script type="importmap">
@@ -43,7 +63,7 @@
   <body class="bg-gray-950 text-gray-100 overflow-x-hidden selection:bg-amber-500 selection:text-gray-900">
     <div id="root"></div>
     
-    <!-- Optional: Add an ad container for AdSense -->
+    <!-- Ad container for AdSense -->
     <div class="hidden">
       <ins class="adsbygoogle"
            style="display:block"

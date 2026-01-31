@@ -1,8 +1,4 @@
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
   --bg-primary: #030712;
   --text-primary: #f9fafb;
@@ -10,7 +6,6 @@
 
 body {
   font-family: 'Assistant', sans-serif;
-  @apply bg-gray-950 text-gray-100;
 }
 
 .mono {
@@ -22,23 +17,20 @@ body {
 .font-size-md { font-size: 1.875rem !important; }
 .font-size-lg { font-size: 3rem !important; }
 
-/* Accessible Focus */
-:focus-visible {
-  @apply outline-none ring-2 ring-amber-500 ring-offset-2 ring-offset-gray-950;
-}
-
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  @apply bg-gray-900;
+  background: #111827;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-700 rounded-full border-2 border-gray-900;
+  background: #374151;
+  border-radius: 9999px;
+  border: 2px solid #111827;
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-600;
+  background: #4b5563;
 }
 
 /* Game Controls Animation */
@@ -49,4 +41,10 @@ body {
 }
 .key-press {
   animation: press 0.1s ease-in-out;
+}
+
+/* Accessibility Focus */
+:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
 }
