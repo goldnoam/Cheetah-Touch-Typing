@@ -29,23 +29,24 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="index.css">
-    
-    <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh/react@19.2.4",
-        "react/": "https://esm.sh/react@19.2.4/",
-        "react-dom": "https://esm.sh/react-dom@19.2.4",
-        "react-dom/": "https://esm.sh/react-dom@19.2.4/",
-        "recharts": "https://esm.sh/recharts@3.7.0",
-        "lucide-react": "https://esm.sh/lucide-react@0.475.0"
-      }
-    }
-    </script>
-  </head>
+    <link rel="stylesheet" href="/index.css">
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "recharts": "https://esm.sh/recharts@^3.7.0"
+  }
+}
+</script>
+</head>
   <body class="bg-gray-950 text-gray-100 overflow-x-hidden selection:bg-amber-500 selection:text-gray-900">
     <div id="root"></div>
+    
+    <!-- Entry Point - Critical for production site to load -->
+    <script type="module" src="/index.tsx"></script>
     
     <!-- Ad container for AdSense - Centered and visible when not blocked -->
     <div id="ad-container" class="flex justify-center my-8 min-h-[90px]">
