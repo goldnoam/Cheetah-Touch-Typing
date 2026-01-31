@@ -42,8 +42,8 @@
   <body class="bg-gray-950 text-gray-100 overflow-x-hidden selection:bg-amber-500 selection:text-gray-900">
     <div id="root"></div>
     
-    <!-- Ad container for AdSense -->
-    <div class="hidden">
+    <!-- Ad container for AdSense - Centered and visible when not blocked -->
+    <div class="flex justify-center my-8 min-h-[90px]">
       <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-0274741291001288"
@@ -51,7 +51,11 @@
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
       <script>
-           (adsbygoogle = window.adsbygoogle || []).push({});
+           try {
+             (adsbygoogle = window.adsbygoogle || []).push({});
+           } catch (e) {
+             console.info("AdSense blocked by client (ad-blocker). This is expected behavior.");
+           }
       </script>
     </div>
   </body>

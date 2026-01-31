@@ -21,7 +21,7 @@ const App: React.FC = () => {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
-  const [theme, setTheme] = useState<ThemeMode>('dark'); // Dark by default
+  const [theme, setTheme] = useState<ThemeMode>('dark'); 
   const [wpmGoal, setWpmGoal] = useState<number>(40);
   const [isPaused, setIsPaused] = useState(false);
   const [gameState, setGameState] = useState<GameState>({
@@ -36,7 +36,6 @@ const App: React.FC = () => {
 
   const audioCtxRef = useRef<AudioContext | null>(null);
 
-  // Native Browser TTS
   const speak = useCallback((text: string) => {
     if (!isSoundEnabled) return;
     const utterance = new SpeechSynthesisUtterance(text);
@@ -283,15 +282,39 @@ const App: React.FC = () => {
 
           <StatsPanel stats={stats} lang={selectedLang} theme={theme} wpmGoal={wpmGoal} />
 
-          {/* Mobile WASD/Arrows HUD */}
-          <div className="md:hidden flex flex-col items-center gap-2 mb-4">
+          {/* Interactive Mobile WASD/Arrows HUD */}
+          <div className="md:hidden flex flex-col items-center gap-2 mb-4 select-none">
              <div className="flex justify-center">
-                <button className="w-14 h-14 bg-gray-800 rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all text-amber-500 font-black">W</button>
+                <button 
+                  onPointerDown={() => setActiveKey('w')} 
+                  onPointerUp={() => setActiveKey(null)}
+                  className="w-16 h-16 bg-gray-800 active:bg-amber-500 active:text-gray-900 rounded-2xl flex items-center justify-center shadow-lg active:scale-90 transition-all text-amber-500 font-black border-b-4 border-gray-950 active:border-b-0"
+                >
+                  <ChevronUp size={28} />
+                </button>
              </div>
              <div className="flex gap-2">
-               <button className="w-14 h-14 bg-gray-800 rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all text-amber-500 font-black">A</button>
-               <button className="w-14 h-14 bg-gray-800 rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all text-amber-500 font-black">S</button>
-               <button className="w-14 h-14 bg-gray-800 rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all text-amber-500 font-black">D</button>
+               <button 
+                  onPointerDown={() => setActiveKey('a')} 
+                  onPointerUp={() => setActiveKey(null)}
+                  className="w-16 h-16 bg-gray-800 active:bg-amber-500 active:text-gray-900 rounded-2xl flex items-center justify-center shadow-lg active:scale-90 transition-all text-amber-500 font-black border-b-4 border-gray-950 active:border-b-0"
+               >
+                 <ChevronLeft size={28} />
+               </button>
+               <button 
+                  onPointerDown={() => setActiveKey('s')} 
+                  onPointerUp={() => setActiveKey(null)}
+                  className="w-16 h-16 bg-gray-800 active:bg-amber-500 active:text-gray-900 rounded-2xl flex items-center justify-center shadow-lg active:scale-90 transition-all text-amber-500 font-black border-b-4 border-gray-950 active:border-b-0"
+               >
+                 <ChevronDown size={28} />
+               </button>
+               <button 
+                  onPointerDown={() => setActiveKey('d')} 
+                  onPointerUp={() => setActiveKey(null)}
+                  className="w-16 h-16 bg-gray-800 active:bg-amber-500 active:text-gray-900 rounded-2xl flex items-center justify-center shadow-lg active:scale-90 transition-all text-amber-500 font-black border-b-4 border-gray-950 active:border-b-0"
+               >
+                 <ChevronRight size={28} />
+               </button>
              </div>
           </div>
 
