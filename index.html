@@ -15,8 +15,13 @@
     <meta property="og:description" content="שפר את כישורי ההקלדה שלך עם המערכת המתקדמת של צ'יטה." />
     <meta property="og:type" content="website" />
 
-    <!-- Google AdSense Readiness -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0274741291001288" crossorigin="anonymous"></script>
+    <!-- Google AdSense Readiness with Error Handling -->
+    <script 
+      async 
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0274741291001288" 
+      crossorigin="anonymous"
+      onerror="window.adBlockerActive = true; console.info('AdSense script blocked by browser or extension (ERR_BLOCKED_BY_CLIENT). This is expected if an ad-blocker is active.')"
+    ></script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐆</text></svg>">
@@ -43,7 +48,7 @@
     <div id="root"></div>
     
     <!-- Ad container for AdSense - Centered and visible when not blocked -->
-    <div class="flex justify-center my-8 min-h-[90px]">
+    <div id="ad-container" class="flex justify-center my-8 min-h-[90px]">
       <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-0274741291001288"
@@ -51,11 +56,25 @@
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
       <script>
-           try {
-             (adsbygoogle = window.adsbygoogle || []).push({});
-           } catch (e) {
-             console.info("AdSense blocked by client (ad-blocker). This is expected behavior.");
-           }
+        (function() {
+          function pushAd() {
+            try {
+              // Only attempt push if the library loaded successfully
+              if (window.adsbygoogle && typeof window.adsbygoogle.push === 'function') {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+              }
+            } catch (e) {
+              console.warn("AdSense initialization failed gracefully:", e.message);
+            }
+          }
+
+          // Initialize on window load or immediately if already loaded
+          if (document.readyState === 'complete') {
+            pushAd();
+          } else {
+            window.addEventListener('load', pushAd);
+          }
+        })();
       </script>
     </div>
   </body>
