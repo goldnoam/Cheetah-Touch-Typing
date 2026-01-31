@@ -1,50 +1,55 @@
 
-:root {
-  --bg-primary: #030712;
-  --text-primary: #f9fafb;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: #030712;
+    --text-primary: #f9fafb;
+  }
+
+  body {
+    @apply font-assistant bg-gray-950 text-gray-100;
+  }
+
+  /* Accessibility Focus */
+  :focus-visible {
+    @apply outline-none ring-2 ring-amber-500 ring-offset-2 ring-offset-gray-950;
+  }
 }
 
-body {
-  font-family: 'Assistant', sans-serif;
-}
+@layer components {
+  .mono {
+    @apply font-mono;
+  }
 
-.mono {
-  font-family: 'JetBrains Mono', monospace;
-}
+  /* Font Size Modifiers */
+  .font-size-sm { font-size: 1.125rem !important; }
+  .font-size-md { font-size: 1.875rem !important; }
+  .font-size-lg { font-size: 3rem !important; }
 
-/* Font Size Modifiers */
-.font-size-sm { font-size: 1.125rem !important; }
-.font-size-md { font-size: 1.875rem !important; }
-.font-size-lg { font-size: 3rem !important; }
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-700 rounded-full border-2 border-gray-900;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-600;
+  }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: #111827;
-}
-::-webkit-scrollbar-thumb {
-  background: #374151;
-  border-radius: 9999px;
-  border: 2px solid #111827;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #4b5563;
-}
-
-/* Game Controls Animation */
-@keyframes press {
-  0% { transform: scale(1); }
-  50% { transform: scale(0.95); }
-  100% { transform: scale(1); }
-}
-.key-press {
-  animation: press 0.1s ease-in-out;
-}
-
-/* Accessibility Focus */
-:focus-visible {
-  outline: 2px solid #f59e0b;
-  outline-offset: 2px;
+  /* Game Controls Animation */
+  @keyframes press {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+  }
+  .key-press {
+    animation: press 0.1s ease-in-out;
+  }
 }
