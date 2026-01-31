@@ -6,7 +6,12 @@ import VisualKeyboard from './VisualKeyboard.tsx';
 import TypingArea from './TypingArea.tsx';
 import StatsPanel from './StatsPanel.tsx';
 import HistoryModal from './HistoryModal.tsx';
-import { Zap, RotateCcw, Globe, Trophy, TrendingUp, Settings2, History as HistoryIcon, Volume2, VolumeX, Moon, Sun, Target, Type as TypeIcon } from 'lucide-react';
+import { 
+  Zap, RotateCcw, Globe, Trophy, TrendingUp, Settings2, 
+  History as HistoryIcon, Volume2, VolumeX, Moon, Sun, 
+  Target, Type as TypeIcon, Pause, Play, RefreshCw,
+  ChevronUp, ChevronDown, ChevronLeft, ChevronRight
+} from 'lucide-react';
 
 const App: React.FC = () => {
   const [selectedLang, setSelectedLang] = useState<LanguageCode>('he');
@@ -18,6 +23,7 @@ const App: React.FC = () => {
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const [theme, setTheme] = useState<ThemeMode>('dark');
   const [wpmGoal, setWpmGoal] = useState<number>(40);
+  const [isPaused, setIsPaused] = useState(false);
   const [gameState, setGameState] = useState<GameState>({
     currentExercise: INITIAL_EXERCISES[0],
     userInput: '',
@@ -35,7 +41,7 @@ const App: React.FC = () => {
     if (!isSoundEnabled) return;
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = selectedLang === 'he' ? 'he-IL' : 'en-US';
-    utterance.rate = 1.1;
+    utterance.rate = 1.2;
     window.speechSynthesis.speak(utterance);
   }, [isSoundEnabled, selectedLang]);
 
@@ -47,7 +53,7 @@ const App: React.FC = () => {
     const savedSound = localStorage.getItem('cheetah_typing_sound');
     if (savedSound !== null) setIsSoundEnabled(savedSound === 'true');
     const savedTheme = localStorage.getItem('cheetah_typing_theme') as ThemeMode;
-    if (savedTheme) setTheme(savedTheme);
+    if (savedTheme) setTheme(savedTheme || 'dark');
     const savedGoal = localStorage.getItem('cheetah_typing_goal');
     if (savedGoal) setWpmGoal(parseInt(savedGoal, 10));
     const savedFontSize = localStorage.getItem('cheetah_typing_fontsize') as FontSize;
@@ -100,19 +106,23 @@ const App: React.FC = () => {
   }, [gameState, history]);
 
   const handleInputChange = (value: string) => {
-    if (gameState.isFinished) return;
+    if (gameState.isFinished || isPaused) return;
+    
     if (value.length < gameState.userInput.length) {
       setGameState(prev => ({ ...prev, userInput: value }));
       return;
     }
+    
     let { startTime, errors } = gameState;
     if (!startTime && value.length > 0) startTime = Date.now();
     const lastCharIdx = value.length - 1;
     const isCorrect = value[lastCharIdx] === currentExercise.content[lastCharIdx];
     if (!isCorrect) errors++;
     playFeedbackSound(isCorrect);
+    
     const isFinished = value.length === currentExercise.content.length;
     setGameState(prev => ({ ...prev, userInput: value, startTime, errors, isFinished, endTime: isFinished ? Date.now() : null }));
+    
     if (lastCharIdx >= 0) {
       setActiveKey(value[lastCharIdx]);
       setTimeout(() => setActiveKey(null), 100);
@@ -121,8 +131,16 @@ const App: React.FC = () => {
 
   const restartGame = useCallback(() => {
     setGameState({ currentExercise, userInput: '', startTime: null, endTime: null, isFinished: false, errors: 0 });
-    speak("Restarted");
+    setIsPaused(false);
+    speak("Reset");
   }, [currentExercise, speak]);
+
+  const togglePause = () => {
+    if (gameState.startTime && !gameState.isFinished) {
+      setIsPaused(!isPaused);
+      speak(isPaused ? "Resumed" : "Paused");
+    }
+  };
 
   const changeLanguage = (lang: LanguageCode) => {
     setSelectedLang(lang);
@@ -132,7 +150,8 @@ const App: React.FC = () => {
     const exercise = INITIAL_EXERCISES.find(e => e.language === lang) || INITIAL_EXERCISES[0];
     setCurrentExercise(exercise);
     setGameState({ currentExercise: exercise, userInput: '', startTime: null, endTime: null, isFinished: false, errors: 0 });
-    speak(`Language changed to ${lang}`);
+    setIsPaused(false);
+    speak(`Switched to ${lang}`);
   };
 
   const isHe = selectedLang === 'he';
@@ -163,22 +182,22 @@ const App: React.FC = () => {
         <div className={`absolute top-0 ${isHe ? 'left-0' : 'right-0'} flex gap-2`}>
           <button 
             aria-label="Toggle Theme"
-            onClick={() => { setTheme(isDarkMode ? 'light' : 'dark'); speak("Theme toggled"); }}
-            className={`p-3 rounded-2xl border shadow-sm transition-all ${isDarkMode ? 'bg-gray-900 border-gray-800 hover:text-amber-500' : 'bg-white border-slate-200 hover:text-amber-600'}`}
+            onClick={() => setTheme(isDarkMode ? 'light' : 'dark')}
+            className={`p-3 rounded-2xl border shadow-sm transition-all ${isDarkMode ? 'bg-gray-900 border-gray-800 text-amber-500' : 'bg-white border-slate-200 text-amber-600'}`}
           >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
           <button 
             aria-label="Toggle Sound"
             onClick={() => setIsSoundEnabled(!isSoundEnabled)}
-            className={`p-3 rounded-2xl border shadow-sm transition-all ${isDarkMode ? 'bg-gray-900 border-gray-800 hover:text-amber-500' : 'bg-white border-slate-200 hover:text-amber-600'}`}
+            className={`p-3 rounded-2xl border shadow-sm transition-all ${isDarkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-slate-200'}`}
           >
             {isSoundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
           </button>
           <button 
             aria-label="View History"
-            onClick={() => { setIsHistoryOpen(true); speak("Opening history"); }}
-            className={`p-3 rounded-2xl border shadow-sm transition-all ${isDarkMode ? 'bg-gray-900 border-gray-800 hover:text-amber-500' : 'bg-white border-slate-200 hover:text-amber-600'}`}
+            onClick={() => setIsHistoryOpen(true)}
+            className={`p-3 rounded-2xl border shadow-sm transition-all ${isDarkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-slate-200'}`}
           >
             <HistoryIcon size={20} />
           </button>
@@ -189,7 +208,6 @@ const App: React.FC = () => {
         
         {/* Controls Bar */}
         <div className="flex flex-wrap justify-center gap-4 w-full">
-          {/* Language Selector */}
           <div className={`p-1.5 rounded-2xl border flex flex-wrap gap-1 shadow-sm ${isDarkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-slate-200'}`}>
             {(Object.keys(KEYBOARD_VARIANTS) as LanguageCode[]).map((lang) => (
               <button
@@ -202,13 +220,12 @@ const App: React.FC = () => {
             ))}
           </div>
 
-          {/* Font Size Selector */}
           <div className={`p-1.5 rounded-2xl border flex gap-1 shadow-sm ${isDarkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-slate-200'}`}>
             <TypeIcon size={16} className="mx-2 my-auto opacity-50" />
             {(['sm', 'md', 'lg'] as FontSize[]).map(sz => (
               <button
                 key={sz}
-                onClick={() => { setFontSize(sz); speak(`Font size ${sz}`); }}
+                onClick={() => setFontSize(sz)}
                 className={`w-8 h-8 rounded-lg text-xs font-bold flex items-center justify-center transition-all ${fontSize === sz ? 'bg-amber-500 text-gray-900' : 'hover:bg-gray-800/50'}`}
               >
                 {sz.toUpperCase()}
@@ -225,6 +242,24 @@ const App: React.FC = () => {
             />
             <span className="text-[10px] font-bold pr-2 opacity-50">WPM</span>
           </div>
+
+          <div className="flex gap-2">
+            <button 
+              onClick={togglePause}
+              disabled={!gameState.startTime || gameState.isFinished}
+              className={`p-3 rounded-2xl border transition-all ${isDarkMode ? 'bg-gray-900 border-gray-800 hover:text-amber-500' : 'bg-white border-slate-200 hover:text-amber-600'} disabled:opacity-20`}
+              title="Pause/Play"
+            >
+              {isPaused ? <Play size={20} /> : <Pause size={20} />}
+            </button>
+            <button 
+              onClick={restartGame}
+              className={`p-3 rounded-2xl border transition-all ${isDarkMode ? 'bg-gray-900 border-gray-800 hover:text-amber-500' : 'bg-white border-slate-200 hover:text-amber-600'}`}
+              title="Reset"
+            >
+              <RefreshCw size={20} />
+            </button>
+          </div>
         </div>
 
         {/* Typing Section */}
@@ -232,10 +267,8 @@ const App: React.FC = () => {
           <div className="w-full max-w-4xl flex justify-between items-center px-1">
             <h2 className="text-xl font-bold flex items-center gap-2">
               <span className="text-amber-500">•</span> {currentExercise.title}
+              {isPaused && <span className="text-amber-500 animate-pulse text-sm ml-2 font-black uppercase">PAUSED</span>}
             </h2>
-            <button onClick={restartGame} className="p-2 hover:bg-gray-800 rounded-lg transition-colors text-gray-400 hover:text-amber-500">
-              <RotateCcw size={20} />
-            </button>
           </div>
 
           <TypingArea 
@@ -245,9 +278,20 @@ const App: React.FC = () => {
             isFinished={gameState.isFinished}
             theme={theme}
             fontSize={fontSize}
+            isPaused={isPaused}
           />
 
           <StatsPanel stats={stats} lang={selectedLang} theme={theme} wpmGoal={wpmGoal} />
+
+          {/* Mobile WASD/Arrows HUD (Visual Only for Experience) */}
+          <div className="md:hidden flex flex-col items-center gap-2 opacity-50">
+             <div className="flex justify-center"><button className="p-3 bg-gray-800 rounded-lg"><ChevronUp size={20}/></button></div>
+             <div className="flex gap-2">
+               <button className="p-3 bg-gray-800 rounded-lg"><ChevronLeft size={20}/></button>
+               <button className="p-3 bg-gray-800 rounded-lg"><ChevronDown size={20}/></button>
+               <button className="p-3 bg-gray-800 rounded-lg"><ChevronRight size={20}/></button>
+             </div>
+          </div>
 
           <VisualKeyboard layout={currentLayout} activeKey={activeKey} languageCode={selectedLang} theme={theme} />
         </div>

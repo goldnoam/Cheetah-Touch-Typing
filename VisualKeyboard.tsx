@@ -9,20 +9,18 @@ interface VisualKeyboardProps {
   theme?: ThemeMode;
 }
 
-const VisualKeyboard: React.FC<VisualKeyboardProps> = ({ layout, activeKey, languageCode, theme = 'dark' }) => {
-  const isRtl = languageCode === 'he';
+const VisualKeyboard: React.FC<VisualKeyboardProps> = ({ layout, activeKey, theme = 'dark' }) => {
   const isDarkMode = theme === 'dark';
 
   return (
-    <div className={`w-full max-w-4xl overflow-x-auto pb-4 ${isRtl ? 'rtl' : 'ltr'}`}>
+    <div className="w-full max-w-4xl overflow-x-auto pb-4" dir="ltr">
       <div className={`flex flex-col gap-2 p-6 rounded-[2rem] shadow-2xl border select-none min-w-[320px] transition-colors duration-300 ${isDarkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-slate-200'}`}>
         {layout.rows.map((row, rowIndex) => (
           <div 
             key={rowIndex} 
             className="flex justify-center gap-2"
             style={{ 
-              paddingRight: isRtl ? (rowIndex === 1 ? '1rem' : rowIndex === 2 ? '2rem' : '0') : '0',
-              paddingLeft: !isRtl ? (rowIndex === 1 ? '1rem' : rowIndex === 2 ? '2rem' : '0') : '0' 
+              paddingLeft: (rowIndex === 1 ? '1rem' : rowIndex === 2 ? '2rem' : '0') 
             }}
           >
             {row.map((key, keyIndex) => {
