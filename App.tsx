@@ -10,7 +10,8 @@ import {
   Zap, RotateCcw, Globe, Trophy, TrendingUp, Settings2, 
   History as HistoryIcon, Volume2, VolumeX, Moon, Sun, 
   Target, Type as TypeIcon, Pause, Play, RefreshCw,
-  ChevronUp, ChevronDown, ChevronLeft, ChevronRight
+  ChevronUp, ChevronDown, ChevronLeft, ChevronRight,
+  ChevronRightCircle
 } from 'lucide-react';
 
 const App: React.FC = () => {
@@ -104,6 +105,21 @@ const App: React.FC = () => {
     };
   }, [gameState, history]);
 
+  useEffect(() => {
+    if (gameState.isFinished) {
+      const newEntry: HistoryEntry = {
+        id: Date.now().toString(),
+        date: Date.now(),
+        wpm: stats.wpm,
+        accuracy: stats.accuracy,
+        exerciseTitle: currentExercise.title,
+        language: selectedLang
+      };
+      setHistory(prev => [...prev, newEntry]);
+      speak("Exercise Finished");
+    }
+  }, [gameState.isFinished]);
+
   const handleInputChange = (value: string) => {
     if (gameState.isFinished || isPaused) return;
     
@@ -133,6 +149,18 @@ const App: React.FC = () => {
     setIsPaused(false);
     speak("Reset");
   }, [currentExercise, speak]);
+
+  const loadNextLevel = useCallback(() => {
+    const sameLangExercises = INITIAL_EXERCISES.filter(e => e.language === selectedLang);
+    const currentIndex = sameLangExercises.findIndex(e => e.id === currentExercise.id);
+    const nextIndex = (currentIndex + 1) % sameLangExercises.length;
+    const nextExercise = sameLangExercises[nextIndex];
+    
+    setCurrentExercise(nextExercise);
+    setGameState({ currentExercise: nextExercise, userInput: '', startTime: null, endTime: null, isFinished: false, errors: 0 });
+    setIsPaused(false);
+    speak("Next Level");
+  }, [currentExercise, selectedLang, speak]);
 
   const togglePause = () => {
     if (gameState.startTime && !gameState.isFinished) {
@@ -266,6 +294,13 @@ const App: React.FC = () => {
           <div className="w-full max-w-4xl flex justify-between items-center px-1">
             <h2 className="text-xl font-bold flex items-center gap-2">
               <span className="text-amber-500">•</span> {currentExercise.title}
+              <span className={`px-2 py-0.5 rounded text-[10px] uppercase font-black ${
+                currentExercise.level === 'beginner' ? 'bg-green-500/10 text-green-500' :
+                currentExercise.level === 'intermediate' ? 'bg-amber-500/10 text-amber-500' :
+                'bg-red-500/10 text-red-500'
+              }`}>
+                {currentExercise.level}
+              </span>
               {isPaused && <span className="text-amber-500 animate-pulse text-sm ml-2 font-black uppercase">PAUSED</span>}
             </h2>
           </div>
@@ -336,12 +371,21 @@ const App: React.FC = () => {
                   <div className="text-3xl font-black text-green-500">{stats.accuracy}%</div>
                 </div>
               </div>
-              <button
-                onClick={restartGame}
-                className="w-full py-4 bg-amber-500 hover:bg-amber-400 text-gray-900 font-black rounded-2xl text-xl shadow-lg transition-all"
-              >
-                {t.restart}
-              </button>
+              <div className="flex flex-col gap-3 w-full">
+                <button
+                  onClick={loadNextLevel}
+                  className="w-full py-4 bg-amber-500 hover:bg-amber-400 text-gray-900 font-black rounded-2xl text-xl shadow-lg transition-all flex items-center justify-center gap-2"
+                >
+                  <ChevronRightCircle size={24} />
+                  {t.nextLevel}
+                </button>
+                <button
+                  onClick={restartGame}
+                  className={`w-full py-3 rounded-2xl font-bold transition-all border ${isDarkMode ? 'bg-gray-800 border-gray-700 hover:bg-gray-700 text-gray-300' : 'bg-slate-100 border-slate-200 hover:bg-slate-200 text-slate-600'}`}
+                >
+                  {t.restart}
+                </button>
+              </div>
             </div>
           </div>
         )}

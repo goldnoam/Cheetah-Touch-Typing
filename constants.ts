@@ -56,7 +56,7 @@ export const KEYBOARD_VARIANTS: Record<LanguageCode, Partial<Record<LayoutVarian
       rows: [
         ['ौ', 'ै', 'ा', 'ी', 'ू', 'ब', 'ह', 'ग', 'द', 'ज'],
         ['ो', 'े', '्', 'ि', 'ु', 'प', 'र', 'क', 'त', 'च'],
-        ['ा', 'म', 'न', 'व', 'ल', 'स', 'य', '.', '?', '/']
+        ['ा', 'म', 'न', 'व', 'ל', 'ס', 'य', '.', '?', '/']
       ]
     }
   },
@@ -98,40 +98,126 @@ export const getLayout = (lang: LanguageCode, variant: LayoutVariant): KeyboardL
 };
 
 export const INITIAL_EXERCISES: Exercise[] = [
+  // HEBREW
   {
-    id: '1',
+    id: 'he-1',
     title: "שורת הבית - בסיס",
     language: 'he',
     level: 'beginner',
     content: 'כך כך דג דג דג כד כד שד שד שד עכ עכ עכ לחי לחי לחי חלח חלח חלח שדגכ עיהל'
   },
   {
-    id: '2',
-    title: 'English Home Row',
+    id: 'he-2',
+    title: 'שורת הבית - מילים קצרות',
+    language: 'he',
+    level: 'beginner',
+    content: 'אבא בא אמא באה ילד גדל דג שט בים שד קטן שח רח מר לב דם חם ים שם'
+  },
+  {
+    id: 'he-3',
+    title: 'הוספת שורה עליונה',
+    language: 'he',
+    level: 'intermediate',
+    content: 'קראט וןמפ פן טאר קרא טאר קו טו פו מו נו רו אבא קנה קפה בבוקר'
+  },
+  {
+    id: 'he-4',
+    title: 'משפטים מורכבים',
+    language: 'he',
+    level: 'advanced',
+    content: 'דג סקרן שט בים מאוכזב ולפתע מצא חברה חדשה ושמחה מאוד שכל הכישרון שלו יצא לאור'
+  },
+  {
+    id: 'he-5',
+    title: 'פנגרם עברי',
+    language: 'he',
+    level: 'advanced',
+    content: 'איך בלחיצת כפתור פשוטה המחשב שלכם הופך לכלי עבודה עוצמתי ומיוחד עבור כל אדם'
+  },
+
+  // ENGLISH
+  {
+    id: 'en-1',
+    title: 'Home Row Basics',
     language: 'en',
     level: 'beginner',
     content: 'asdf asdf jkl; jkl; asdf jkl; a s d f j k l ; sad lad fad dad salsa flask alfalfa'
   },
   {
-    id: '3',
-    title: 'Français - Ligne de Base',
+    id: 'en-2',
+    title: 'Top Row Integration',
+    language: 'en',
+    level: 'beginner',
+    content: 'qwer tyui op qwer tyui op quit power tower youth root price true party water'
+  },
+  {
+    id: 'en-3',
+    title: 'Bottom Row Practice',
+    language: 'en',
+    level: 'intermediate',
+    content: 'zxcv bnm, zxcv bnm, zone extra clear view brave night music movie cover'
+  },
+  {
+    id: 'en-4',
+    title: 'Common Sentences',
+    language: 'en',
+    level: 'intermediate',
+    content: 'The quick brown fox jumps over the lazy dog. Programming is the art of telling a computer what to do.'
+  },
+  {
+    id: 'en-5',
+    title: 'Technical Typing',
+    language: 'en',
+    level: 'advanced',
+    content: 'const typing = (speed) => { return speed > 100 ? "Cheetah" : "Turtle"; }; console.log(typing(120));'
+  },
+
+  // FRENCH
+  {
+    id: 'fr-1',
+    title: 'Ligne de Base',
     language: 'fr',
     level: 'beginner',
     content: 'qsdf jklm qsdf jklm q s d f j k l m salut les amis de la ligne de base'
   },
   {
-    id: '4',
-    title: '中文基础 - Pinyin',
-    language: 'zh',
+    id: 'fr-2',
+    title: 'Phrases Simples',
+    language: 'fr',
+    level: 'intermediate',
+    content: 'Le petit chat boit du lait chaud sur le tapis rouge de la cuisine.'
+  },
+
+  // GERMAN
+  {
+    id: 'de-1',
+    title: 'Grundreihe',
+    language: 'de',
     level: 'beginner',
-    content: 'ni hao ma wo hen hao xie xie ni zhong guo typing cheetah'
+    content: 'asdf jklö asdf jklö fass lass dass saft jagd kalk glasklar'
   },
   {
-    id: '5',
-    title: 'हिन्दी अभ्यास',
-    language: 'hi',
+    id: 'de-2',
+    title: 'Deutsche Sätze',
+    language: 'de',
+    level: 'intermediate',
+    content: 'Übung macht den Meister. Franz jagt im komplett verwahrlosten Taxi quer durch Bayern.'
+  },
+
+  // SPANISH
+  {
+    id: 'es-1',
+    title: 'Fila Central',
+    language: 'es',
     level: 'beginner',
-    content: 'क ख ग घ च छ ज झ ट ठ ड ढ त थ द ध न प फ ब भ म य र ल व'
+    content: 'asdf jklñ asdf jklñ sala ala las salada falsa faja gala halla'
+  },
+  {
+    id: 'es-2',
+    title: 'Frases Comunes',
+    language: 'es',
+    level: 'intermediate',
+    content: 'El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón.'
   }
 ];
 
