@@ -1,4 +1,8 @@
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --bg-primary: #030712;
   --text-primary: #f9fafb;
@@ -6,8 +10,7 @@
 
 body {
   font-family: 'Assistant', sans-serif;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  @apply bg-gray-950 text-gray-100;
 }
 
 .mono {
@@ -21,8 +24,7 @@ body {
 
 /* Accessible Focus */
 :focus-visible {
-  outline: 3px solid #f59e0b;
-  outline-offset: 2px;
+  @apply outline-none ring-2 ring-amber-500 ring-offset-2 ring-offset-gray-950;
 }
 
 /* Custom Scrollbar */
@@ -30,22 +32,21 @@ body {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #111827;
+  @apply bg-gray-900;
 }
 ::-webkit-scrollbar-thumb {
-  background: #374151;
-  border-radius: 5px;
-  border: 2px solid #111827;
+  @apply bg-gray-700 rounded-full border-2 border-gray-900;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4b5563;
+  @apply bg-gray-600;
 }
 
-/* RTL Helpers */
-[dir="rtl"] .ml-auto { margin-right: auto; margin-left: 0; }
-[dir="ltr"] .ml-auto { margin-left: auto; margin-right: 0; }
-
-/* Transitions */
-.transition-all {
-  transition-duration: 200ms;
+/* Game Controls Animation */
+@keyframes press {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+.key-press {
+  animation: press 0.1s ease-in-out;
 }

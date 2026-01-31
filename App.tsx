@@ -21,7 +21,7 @@ const App: React.FC = () => {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
-  const [theme, setTheme] = useState<ThemeMode>('dark');
+  const [theme, setTheme] = useState<ThemeMode>('dark'); // Dark by default
   const [wpmGoal, setWpmGoal] = useState<number>(40);
   const [isPaused, setIsPaused] = useState(false);
   const [gameState, setGameState] = useState<GameState>({
@@ -53,7 +53,7 @@ const App: React.FC = () => {
     const savedSound = localStorage.getItem('cheetah_typing_sound');
     if (savedSound !== null) setIsSoundEnabled(savedSound === 'true');
     const savedTheme = localStorage.getItem('cheetah_typing_theme') as ThemeMode;
-    if (savedTheme) setTheme(savedTheme || 'dark');
+    if (savedTheme) setTheme(savedTheme);
     const savedGoal = localStorage.getItem('cheetah_typing_goal');
     if (savedGoal) setWpmGoal(parseInt(savedGoal, 10));
     const savedFontSize = localStorage.getItem('cheetah_typing_fontsize') as FontSize;
@@ -151,7 +151,7 @@ const App: React.FC = () => {
     setCurrentExercise(exercise);
     setGameState({ currentExercise: exercise, userInput: '', startTime: null, endTime: null, isFinished: false, errors: 0 });
     setIsPaused(false);
-    speak(`Switched to ${lang}`);
+    speak(`Switched language`);
   };
 
   const isHe = selectedLang === 'he';
@@ -283,13 +283,15 @@ const App: React.FC = () => {
 
           <StatsPanel stats={stats} lang={selectedLang} theme={theme} wpmGoal={wpmGoal} />
 
-          {/* Mobile WASD/Arrows HUD (Visual Only for Experience) */}
-          <div className="md:hidden flex flex-col items-center gap-2 opacity-50">
-             <div className="flex justify-center"><button className="p-3 bg-gray-800 rounded-lg"><ChevronUp size={20}/></button></div>
+          {/* Mobile WASD/Arrows HUD */}
+          <div className="md:hidden flex flex-col items-center gap-2 mb-4">
+             <div className="flex justify-center">
+                <button className="w-14 h-14 bg-gray-800 rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all text-amber-500 font-black">W</button>
+             </div>
              <div className="flex gap-2">
-               <button className="p-3 bg-gray-800 rounded-lg"><ChevronLeft size={20}/></button>
-               <button className="p-3 bg-gray-800 rounded-lg"><ChevronDown size={20}/></button>
-               <button className="p-3 bg-gray-800 rounded-lg"><ChevronRight size={20}/></button>
+               <button className="w-14 h-14 bg-gray-800 rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all text-amber-500 font-black">A</button>
+               <button className="w-14 h-14 bg-gray-800 rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all text-amber-500 font-black">S</button>
+               <button className="w-14 h-14 bg-gray-800 rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all text-amber-500 font-black">D</button>
              </div>
           </div>
 
@@ -322,13 +324,14 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <footer className="mt-auto py-10 flex flex-col items-center gap-4 text-gray-500 text-xs text-center border-t border-gray-800 w-full max-w-5xl">
-        <div className="flex flex-wrap justify-center gap-6 opacity-60">
+      <footer className="mt-auto py-12 flex flex-col items-center gap-4 text-gray-500 text-xs text-center border-t border-gray-800/50 w-full max-w-5xl">
+        <div className="flex flex-wrap justify-center gap-6 opacity-60 mb-2">
           <span className="flex items-center gap-1"><TrendingUp size={14} /> Peak Performance</span>
-          <span className="flex items-center gap-1"><Globe size={14} /> Multi-Language</span>
-          <span className="flex items-center gap-1"><Target size={14} /> WPM Goals</span>
+          <span className="flex items-center gap-1"><Globe size={14} /> Global Typing</span>
+          <span className="flex items-center gap-1"><RefreshCw size={14} /> Offline Ready</span>
         </div>
-        <p className="font-medium">© Noam Gold AI 2026 | Send Feedback: <a href="mailto:goldnoamai@gmail.com" className="text-amber-500 hover:underline">goldnoamai@gmail.com</a></p>
+        <p className="font-bold text-sm tracking-wide">(C) Noam Gold AI 2026</p>
+        <p className="font-medium">Send Feedback: <a href="mailto:goldnoamai@gmail.com" className="text-amber-500 hover:text-amber-400 underline decoration-amber-500/30">goldnoamai@gmail.com</a></p>
       </footer>
     </div>
   );
