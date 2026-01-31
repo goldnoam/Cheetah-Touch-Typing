@@ -15,14 +15,14 @@ const VisualKeyboard: React.FC<VisualKeyboardProps> = ({ layout, activeKey, lang
 
   return (
     <div className={`w-full max-w-4xl overflow-x-auto pb-4 ${isRtl ? 'rtl' : 'ltr'}`}>
-      <div className={`flex flex-col gap-1.5 md:gap-2 p-2 md:p-6 rounded-2xl shadow-2xl border select-none min-w-[320px] transition-colors duration-300 ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-slate-200'}`}>
+      <div className={`flex flex-col gap-2 p-6 rounded-[2rem] shadow-2xl border select-none min-w-[320px] transition-colors duration-300 ${isDarkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-slate-200'}`}>
         {layout.rows.map((row, rowIndex) => (
           <div 
             key={rowIndex} 
-            className="flex justify-center gap-1 md:gap-1.5"
+            className="flex justify-center gap-2"
             style={{ 
-              paddingRight: isRtl ? (rowIndex === 1 ? '0.75rem' : rowIndex === 2 ? '1.5rem' : '0') : '0',
-              paddingLeft: !isRtl ? (rowIndex === 1 ? '0.75rem' : rowIndex === 2 ? '1.5rem' : '0') : '0' 
+              paddingRight: isRtl ? (rowIndex === 1 ? '1rem' : rowIndex === 2 ? '2rem' : '0') : '0',
+              paddingLeft: !isRtl ? (rowIndex === 1 ? '1rem' : rowIndex === 2 ? '2rem' : '0') : '0' 
             }}
           >
             {row.map((key, keyIndex) => {
@@ -31,27 +31,27 @@ const VisualKeyboard: React.FC<VisualKeyboardProps> = ({ layout, activeKey, lang
                 <div
                   key={keyIndex}
                   className={`
-                    w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center 
-                    rounded-md md:rounded-lg font-bold text-xs sm:text-sm md:text-lg transition-all duration-100
+                    w-10 h-10 md:w-14 md:h-14 flex items-center justify-center 
+                    rounded-xl font-bold text-sm md:text-xl transition-all duration-100
                     ${isActive 
-                      ? 'bg-amber-500 text-gray-900 scale-110 shadow-lg ring-2 ring-amber-300 shadow-amber-500/50' 
-                      : (isDarkMode ? 'bg-gray-700 text-gray-300 border-b-2 md:border-b-4 border-gray-950' : 'bg-slate-100 text-slate-600 border-b-2 md:border-b-4 border-slate-300')}
+                      ? 'bg-amber-500 text-gray-900 scale-110 shadow-lg shadow-amber-500/40 ring-4 ring-amber-500/20' 
+                      : (isDarkMode ? 'bg-gray-800 text-gray-400 border-b-4 border-gray-950 hover:text-gray-200' : 'bg-slate-100 text-slate-500 border-b-4 border-slate-300 hover:text-slate-800')}
                   `}
                 >
-                  {key}
+                  {key.toUpperCase()}
                 </div>
               );
             })}
           </div>
         ))}
-        <div className="flex justify-center mt-1 md:mt-2">
+        <div className="flex justify-center mt-4">
           <div 
             className={`
-              w-32 sm:w-48 md:w-64 h-8 sm:h-10 md:h-12 flex items-center justify-center 
-              rounded-md md:rounded-lg transition-all duration-100
+              w-48 md:w-72 h-12 md:h-14 flex items-center justify-center 
+              rounded-xl transition-all duration-100
               ${activeKey === ' ' 
-                ? 'bg-amber-500 scale-105 shadow-lg' 
-                : (isDarkMode ? 'bg-gray-700 border-b-2 md:border-b-4 border-gray-950' : 'bg-slate-100 border-b-2 md:border-b-4 border-slate-300')}
+                ? 'bg-amber-500 scale-105 shadow-lg shadow-amber-500/40' 
+                : (isDarkMode ? 'bg-gray-800 border-b-4 border-gray-950' : 'bg-slate-100 border-b-4 border-slate-300')}
             `}
           />
         </div>

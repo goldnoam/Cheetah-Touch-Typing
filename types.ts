@@ -1,7 +1,8 @@
 
-export type LanguageCode = 'he' | 'en' | 'ru' | 'es' | 'de';
-export type LayoutVariant = 'qwerty' | 'dvorak';
+export type LanguageCode = 'he' | 'en' | 'ru' | 'es' | 'de' | 'fr' | 'zh' | 'hi';
+export type LayoutVariant = 'qwerty' | 'dvorak' | 'azerty';
 export type ThemeMode = 'dark' | 'light';
+export type FontSize = 'sm' | 'md' | 'lg';
 
 export interface KeyboardLayout {
   rows: string[][];
@@ -40,10 +41,4 @@ export interface GameState {
   endTime: number | null;
   isFinished: boolean;
   errors: number;
-}
-
-export interface UserSettings {
-  theme: ThemeMode;
-  wpmGoal: number;
-  isSoundEnabled: boolean;
 }

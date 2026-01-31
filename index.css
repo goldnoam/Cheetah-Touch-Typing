@@ -1,0 +1,51 @@
+
+:root {
+  --bg-primary: #030712;
+  --text-primary: #f9fafb;
+}
+
+body {
+  font-family: 'Assistant', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Font Size Modifiers */
+.font-size-sm { font-size: 1.125rem !important; }
+.font-size-md { font-size: 1.875rem !important; }
+.font-size-lg { font-size: 3rem !important; }
+
+/* Accessible Focus */
+:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #111827;
+}
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 5px;
+  border: 2px solid #111827;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+/* RTL Helpers */
+[dir="rtl"] .ml-auto { margin-right: auto; margin-left: 0; }
+[dir="ltr"] .ml-auto { margin-left: auto; margin-right: 0; }
+
+/* Transitions */
+.transition-all {
+  transition-duration: 200ms;
+}

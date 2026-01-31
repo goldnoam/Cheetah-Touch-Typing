@@ -1,5 +1,5 @@
 {
-  "name": "cheetah-touch-typing---צ'יטה-הקלדה-עיוורת",
+  "name": "צ'יטה-הקלדה-עיוורת---cheetah-typing",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,8 +12,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "recharts": "3.7.0",
-    "lucide-react": "0.475.0",
-    "@google/genai": "1.38.0"
+    "lucide-react": "0.475.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

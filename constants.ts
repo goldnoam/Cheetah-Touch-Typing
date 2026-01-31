@@ -30,6 +30,36 @@ export const KEYBOARD_VARIANTS: Record<LanguageCode, Partial<Record<LayoutVarian
       ]
     }
   },
+  fr: {
+    azerty: {
+      language: 'Français AZERTY',
+      rows: [
+        ['a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+        ['q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm'],
+        ['w', 'x', 'c', 'v', 'b', 'n', ',', ';', ':', '!']
+      ]
+    }
+  },
+  zh: {
+    qwerty: {
+      language: '中文 (Pinyin)',
+      rows: [
+        ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+        ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';'],
+        ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/']
+      ]
+    }
+  },
+  hi: {
+    qwerty: {
+      language: 'हिन्दी (InScript)',
+      rows: [
+        ['ौ', 'ै', 'ा', 'ी', 'ू', 'ब', 'ह', 'ग', 'द', 'ज'],
+        ['ो', 'े', '्', 'ि', 'ु', 'प', 'र', 'क', 'त', 'च'],
+        ['ा', 'म', 'न', 'व', 'ल', 'स', 'य', '.', '?', '/']
+      ]
+    }
+  },
   ru: {
     qwerty: {
       language: 'Русский',
@@ -64,13 +94,13 @@ export const KEYBOARD_VARIANTS: Record<LanguageCode, Partial<Record<LayoutVarian
 
 export const getLayout = (lang: LanguageCode, variant: LayoutVariant): KeyboardLayout => {
   const langConfig = KEYBOARD_VARIANTS[lang];
-  return langConfig[variant] || langConfig['qwerty'] || Object.values(langConfig)[0] as KeyboardLayout;
+  return langConfig[variant] || langConfig['qwerty'] || (Object.values(langConfig)[0] as KeyboardLayout);
 };
 
 export const INITIAL_EXERCISES: Exercise[] = [
   {
     id: '1',
-    title: 'שורת הבית - בסיס',
+    title: "שורת הבית - בסיס",
     language: 'he',
     level: 'beginner',
     content: 'כך כך דג דג דג כד כד שד שד שד עכ עכ עכ לחי לחי לחי חלח חלח חלח שדגכ עיהל'
@@ -81,6 +111,27 @@ export const INITIAL_EXERCISES: Exercise[] = [
     language: 'en',
     level: 'beginner',
     content: 'asdf asdf jkl; jkl; asdf jkl; a s d f j k l ; sad lad fad dad salsa flask alfalfa'
+  },
+  {
+    id: '3',
+    title: 'Français - Ligne de Base',
+    language: 'fr',
+    level: 'beginner',
+    content: 'qsdf jklm qsdf jklm q s d f j k l m salut les amis de la ligne de base'
+  },
+  {
+    id: '4',
+    title: '中文基础 - Pinyin',
+    language: 'zh',
+    level: 'beginner',
+    content: 'ni hao ma wo hen hao xie xie ni zhong guo typing cheetah'
+  },
+  {
+    id: '5',
+    title: 'हिन्दी अभ्यास',
+    language: 'hi',
+    level: 'beginner',
+    content: 'क ख ग घ च छ ज झ ट ठ ड ढ त थ द ध न प फ ब भ म य र ल व'
   }
 ];
 
@@ -90,23 +141,18 @@ export const UI_STRINGS = {
     tagline: "הקלדה מהירה כמו צ'יטה, דיוק של נץ.",
     startPractice: 'התחל לתרגל',
     selectLanguage: 'בחר שפה',
-    wpm: 'מילים לדקה',
+    wpm: 'WPM',
     accuracy: 'דיוק',
     time: 'זמן',
     errors: 'שגיאות',
     restart: 'נסה שוב',
     nextLevel: 'שלב הבא',
-    generateAI: 'צור תרגיל AI',
-    loading: 'טוען...',
     finished: 'סיימת!',
     layout: 'פריסת מקלדת',
-    goal: 'יעד WPM',
-    goalMet: 'הגעת ליעד!',
-    goalProgress: 'התקדמות ליעד',
-    aiErrorTitle: 'התרחשה שגיאה ביצירת התרגיל',
-    aiErrorDesc: 'לא הצלחנו ליצור תרגיל AI כרגע. בדוק את החיבור לאינטרנט או נסה שוב.',
-    retry: 'נסה שוב',
-    useDefault: 'השתמש בברירת מחדל'
+    goal: 'יעד',
+    goalProgress: 'התקדמות',
+    fontSize: 'גודל גופן',
+    history: 'היסטוריה'
   },
   en: {
     title: 'Cheetah Typing',
@@ -119,16 +165,47 @@ export const UI_STRINGS = {
     errors: 'Errors',
     restart: 'Restart',
     nextLevel: 'Next Level',
-    generateAI: 'AI Generate',
-    loading: 'Loading...',
     finished: 'Finished!',
-    layout: 'Keyboard Layout',
-    goal: 'WPM Goal',
-    goalMet: 'Goal Reached!',
-    goalProgress: 'Goal Progress',
-    aiErrorTitle: 'AI Generation Failed',
-    aiErrorDesc: "We couldn't generate an AI exercise right now. Please check your connection or try again.",
-    retry: 'Retry',
-    useDefault: 'Use Default'
+    layout: 'Layout',
+    goal: 'Goal',
+    goalProgress: 'Progress',
+    fontSize: 'Font Size',
+    history: 'History'
+  },
+  zh: {
+    title: '猎豹打字',
+    tagline: '打字如猎豹般迅速，准确如老鹰般。',
+    startPractice: '开始练习',
+    selectLanguage: '选择语言',
+    wpm: 'WPM',
+    accuracy: '准确度',
+    time: '时间',
+    errors: '错误',
+    restart: '重新开始',
+    nextLevel: '下一级',
+    finished: '完成！',
+    layout: '布局',
+    goal: '目标',
+    goalProgress: '进度',
+    fontSize: '字体大小',
+    history: '历史'
+  },
+  hi: {
+    title: 'चीता टाइपिंग',
+    tagline: 'चीते की तरह तेज और बाज की तरह सटीक।',
+    startPractice: 'अभ्यास शुरू करें',
+    selectLanguage: 'भाषा चुनें',
+    wpm: 'WPM',
+    accuracy: 'सटीकता',
+    time: 'समय',
+    errors: 'गलतियां',
+    restart: 'पुनः प्रारंभ करें',
+    nextLevel: 'अगला स्तर',
+    finished: 'पूरा हुआ!',
+    layout: 'लेआउट',
+    goal: 'लक्ष्य',
+    goalProgress: 'प्रगति',
+    fontSize: 'फ़ॉन्ट आकार',
+    history: 'इतिहास'
   }
 };
